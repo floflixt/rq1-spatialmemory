@@ -31,3 +31,9 @@ version_control/autoload_on_startup=true
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/godot-xr-tools/plugin.cfg")
+
+[xr]
+
+openxr/enabled=true
+openxr/environment_blend_mode=2
+shaders/enabled=true
