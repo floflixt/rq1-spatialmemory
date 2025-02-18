@@ -1,10 +1,147 @@
-[gd_scene load_steps=2 format=3 uid="uid://vl57bah7ral4"]
+[gd_scene load_steps=18 format=3 uid="uid://vl57bah7ral4"]
+
+[ext_resource type="Script" path="res://components/rooms/room.gd" id="1_bsavd"]
+[ext_resource type="PackedScene" uid="uid://cpdvd5mcw2lps" path="res://components/furniture/kallax_2x_4.tscn" id="1_xw6sa"]
+[ext_resource type="PackedScene" uid="uid://bxghx0jj1mvwk" path="res://components/furniture/kallax_2x_4_high.tscn" id="2_qb3r8"]
+[ext_resource type="PackedScene" uid="uid://skjcek35mxc2" path="res://components/xr/xr_origin_3d.tscn" id="4_yjpfk"]
+[ext_resource type="Script" path="res://addons/godot-xr-tools/objects/pickable.gd" id="5_2omkk"]
+[ext_resource type="Texture2D" uid="uid://dgslu1g7qkwqt" path="res://components/xr/00009-2823081887.png" id="6_02gg8"]
+[ext_resource type="Script" path="res://addons/godot-xr-tools/objects/grab_points/grab_point.gd" id="7_wvn28"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_p2rp6"]
 size = Vector3(3.75, 5, 6.5)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_mxhra"]
+size = Vector3(3.75, 1, 6.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1avyk"]
+size = Vector3(3.75, 1, 6.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sbta7"]
+size = Vector3(3.75, 5, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_610b7"]
+size = Vector3(3.75, 5, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hirkp"]
+size = Vector3(1.3, 2.45, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fbr5d"]
+size = Vector3(1, 5, 6.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xfbpo"]
+size = Vector3(1, 5, 6.5)
+
+[sub_resource type="Environment" id="Environment_dfgw3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gtax7"]
+size = Vector3(0.02, 1, 1)
+
 [node name="Room" type="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000149727, 0.00265193, -0.00206304)
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_bsavd")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
 shape = SubResource("BoxShape3D_p2rp6")
+
+[node name="Floor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+visible = false
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_mxhra")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("BoxMesh_1avyk")
+
+[node name="WallWindow" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 3.75)
+visible = false
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallWindow"]
+shape = SubResource("BoxShape3D_sbta7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WallWindow"]
+mesh = SubResource("BoxMesh_610b7")
+
+[node name="DoorMesh" type="MeshInstance3D" parent="WallWindow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.269487, -0.0648842)
+mesh = SubResource("BoxMesh_hirkp")
+
+[node name="WallDoor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -3.75)
+visible = false
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallDoor"]
+shape = SubResource("BoxShape3D_sbta7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WallDoor"]
+mesh = SubResource("BoxMesh_610b7")
+
+[node name="DoorMesh" type="MeshInstance3D" parent="WallDoor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, 0.0661073)
+mesh = SubResource("BoxMesh_hirkp")
+
+[node name="WallLeft" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.375, 2.5, 0)
+visible = false
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallLeft"]
+shape = SubResource("BoxShape3D_fbr5d")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WallLeft"]
+mesh = SubResource("BoxMesh_xfbpo")
+
+[node name="WallRight" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.375, 2.5, 0)
+visible = false
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallRight"]
+shape = SubResource("BoxShape3D_fbr5d")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WallRight"]
+mesh = SubResource("BoxMesh_xfbpo")
+
+[node name="Kallax_2x4" parent="." instance=ExtResource("1_xw6sa")]
+editor_description = "low quality"
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1.66267, 1.96586, 0.349855)
+
+[node name="Kallax_2x4_high" parent="." instance=ExtResource("2_qb3r8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.62745, 1.92103, -0.450179)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_dfgw3")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(0.665232, -0.704021, 0.248638, 0.251171, 0.524615, 0.813444, -0.703122, -0.478678, 0.525821, 0, 3.97031, 0)
+shadow_enabled = true
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(0.181706, 0.832919, 0.522713, 0.205574, -0.551992, 0.808112, 0.961625, -0.0393827, -0.271526, 0, 3.97031, -2.43214)
+shadow_enabled = true
+
+[node name="XROrigin3D" parent="." instance=ExtResource("4_yjpfk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000149727, 0.981168, 0.0995228)
+
+[node name="XRToolsPickable" type="RigidBody3D" parent="."]
+transform = Transform3D(0.24, 0, 0, 0, 0.24, 0, 0, 0, 0.24, -1.53789, 2.49009, 0.549552)
+script = ExtResource("5_2omkk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XRToolsPickable"]
+shape = SubResource("BoxShape3D_gtax7")
+
+[node name="Sprite3D" type="Sprite3D" parent="XRToolsPickable"]
+transform = Transform3D(-4.24e-09, 0, -0.097, 0, 0.097, 0, 0.097, 0, -4.24e-09, 0, 0, 0)
+texture = ExtResource("6_02gg8")
+
+[node name="XRToolsGrabPoint" type="Marker3D" parent="XRToolsPickable"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.494833)
+script = ExtResource("7_wvn28")
